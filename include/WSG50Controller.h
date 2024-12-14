@@ -262,5 +262,4 @@ class WSG50Controller : public WSG50Observer {
   // Update handler
   //
   void updateHandler();
-  void notifyObserver(unsigned int msgId, TRESPONSE* resp);
 };

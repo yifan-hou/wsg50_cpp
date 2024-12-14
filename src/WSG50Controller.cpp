@@ -10,7 +10,7 @@
  * ###   Define Default Values   #############
  * ###########################################
  */
-#define DEBUG true
+#define DEBUG false
 
 #define TIMEOUT 1  // sec
 
@@ -351,8 +351,8 @@ void WSG50Controller::updateHandler(void) {
             &_acceleration, resp.data,
             sizeof(float));  // copy response into float acceleration variable
                              //            float test = 0.0;
-            //            memcpy(&test, resp.data, sizeof(float));
-            //            printf("Acceleration Value: %f\n\n", test);
+        //            memcpy(&test, resp.data, sizeof(float));
+        //            printf("Acceleration Value: %f\n\n", test);
       } else if (resp.status_code == E_NO_PARAM_EXPECTED) {
         std::cout << "GET ACCELERATION response: No Parameter Expected!"
                   << std::endl;
@@ -560,53 +560,12 @@ void WSG50Controller::updateHandler(void) {
       break;
   }
 
-  // update observer
-  //
-  notifyObserver((unsigned int)resp.id, &resp);
-
   // free memory
   //
   if (resp.length > 0 && resp.length != 0) {
     delete[] resp.data;
     resp.data = 0;  // write zeropointer into data-pointer
   }
-}
-
-/*
- *  notify all observers, which are subscribed to this message
- */
-void WSG50Controller::notifyObserver(unsigned int msgId, TRESPONSE* resp) {
-  std::cout << "[Yifan] notifyObserver does nothing now" << std::endl;
-  // // TODO:
-
-  // // declare variables
-  // //
-  // std::map<unsigned int, std::set<WSG50RosObserver *>>::iterator it;
-  // std::set<WSG50RosObserver *>::iterator setIt;
-  // std::set<WSG50RosObserver *> observerSet;
-
-  // // check if there is an observer for this msgid
-  // //
-  // if (this->_observers.find(msgId) != this->_observers.end())
-  // {
-  //     // get the required set of observers
-  //     //
-  //     it = this->_observers.find(msgId);
-  //     observerSet = it->second;
-
-  //     // loop through the set and update all observers
-  //     //
-  //     for (setIt = observerSet.begin(); setIt != observerSet.end(); ++setIt)
-  //     {
-  //         // get the observer
-  //         //
-  //         WSG50RosObserver *observer = *setIt;
-
-  //         // send update to observer
-  //         //
-  //         observer->update(resp);
-  //     }
-  // } // else, if there is no set of observers for this message id
 }
 
 // returns true if the gripper is currently moving
